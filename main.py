@@ -2,7 +2,6 @@ from images import prepare_for_training, convolution, compare_images, load_norma
 from training import train
 from matrix_gif import create_matrix_gif
 import numpy as np
-np.set_printoptions(suppress=True)
 import argparse
 import os
 
@@ -16,7 +15,6 @@ def parse_args():
     optional.add_argument('-e', '--epochs', dest='num_of_epochs', help='Amount of epochs for training.', default=100, type=int)
     optional.add_argument('-o', '--output', dest='out_folder', help='Folder for result images.', default='results')
     optional.add_argument('--no-gif', dest='create_gifs', help='If set, no gifs will be created.', action='store_false')
-    optional.add_argument('-k', '--kernel', dest='kernel', help='Kernel for supervised training')
     optional.add_argument('-h', '--help', action='help', help='Show this help message and exit.')
     parser.set_defaults(create_gifs=True)
     return parser.parse_args()

@@ -30,11 +30,9 @@ def load_normalize_and_grayscale(img_path):
     return img, normalized_img, gray_img
 
 def split_image(img, array_size):
-    if img.shape[0] % array_size != 0 or img.shape[1] % array_size != 0:
-        raise AttributeError("Image needs to be divided by array size")
     splitted_img = []
-    for x in range(0, img.shape[0], array_size):
-        for y in range(0, img.shape[1], array_size):
+    for x in range(0, img.shape[0]-array_size, array_size):
+        for y in range(0, img.shape[1]-array_size, array_size):
             splitted_img.append(img[x:x+array_size, y:y+array_size])
     return splitted_img
 
@@ -42,8 +40,8 @@ def prepare_for_training(img_path, conv_filters):
     img, _, gray_img = load_normalize_and_grayscale(img_path)
     splitted_img = split_image(gray_img, 3)
     
-    filtered_imgs = np.empty(shape=(600, 600, 0))
-    splitted_filtered_imgs = np.empty(shape=(40000, 3, 3, 0))
+    filtered_imgs = np.empty(shape=(gray_img.shape[0], gray_img.shape[1], 0))
+    splitted_filtered_imgs = np.empty(shape=(len(splitted_img), 3, 3, 0))
     
     for conv_filter in conv_filters:
         filtered_img = convolution(gray_img, conv_filter)
