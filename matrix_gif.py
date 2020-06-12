@@ -60,6 +60,10 @@ def create_matrix_gif(values, save_folder="gif_images/", out_image="training_wei
     if not os.path.exists(save_folder):
         os.makedirs(save_folder)
     
+    out_image_folder = '/'.join(out_image.split('/')[:-1])
+    if not os.path.exists(out_image_folder):
+        os.makedirs(out_image_folder)
+    
     with progressbar.ProgressBar(max_value=len(values)) as bar:
         for i, value in enumerate(values):
             save_path = f"{save_folder}img{str(i)}.png"
