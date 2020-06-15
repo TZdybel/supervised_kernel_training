@@ -25,34 +25,90 @@ def parse_args():
     parser.set_defaults(create_gifs=True)
     return parser.parse_args()
 
-kernels = np.array([
-    [
+kernels = np.array([[
         [1, 0, -1], 
         [2, 0, -2], 
         [1, 0, -1]
-    ],
-    [
+    ],[
         [-1, 0, 1], 
         [-2, 0, 2], 
         [-1, 0, 1]
-    ],
-    [
+    ],[
         [1, 2, 1],
         [0, 0, 0],
         [-1, -2, -1]
-    ],
-    [
+    ],[
         [-1, -2, -1],
         [0, 0, 0],
         [1, 2, 1]
+    ],[
+        [0, 1, 2],
+        [-1, 0, 1],
+        [-2, -1, 0]
+    ],[
+        [0, -1, -2],
+        [1, 0, -1],
+        [2, 1, 0]
+    ],[
+        [2, 1, 0],
+        [1, 0, -1],
+        [0, -1, -2]
+    ],[
+        [-2, -1, 0],
+        [-1, 0, 1],
+        [0, 1, 2]
+    ],[
+        [3, 0, -3],
+        [10, 0, -10],
+        [3, 0, -3]
+    ],[
+        [-3, 0, 3],
+        [-10, 0, 10],
+        [-3, 0, 3]
+    ],[
+        [3, 10, 3],
+        [0, 0, 0],
+        [-3, -10, -3]
+    ],[
+        [-3, -10, -3],
+        [0, 0, 0],
+        [3, 10, 3]
+    ],[
+        [0, 3, 10],
+        [-3, 0, 3],
+        [-10, -3, 0]
+    ],[
+        [0, -3, -10],
+        [3, 0, -3],
+        [10, 3, 0]
+    ],[
+        [10, 3, 0],
+        [3, 0, -3],
+        [0, -3, -10]
+    ],[
+        [-10, -3, 0],
+        [-3, 0, 3],
+        [0, 3, 10]
     ]
 ])
 
 kernel_names = [
-    'sobel1',
-    'sobel2',
-    'sobel3',
-    'sobel4'
+    'sobel_right',
+    'sobel_left',
+    'sobel_down',
+    'sobel_up',
+    'sobel_left_down',
+    'sobel_right_up',
+    'sobel_right_down',
+    'sobel_left_up',
+    'scharr_right',
+    'scharr_left',
+    'scharr_down',
+    'scharr_up',
+    'scharr_left_up',
+    'scharr_right_up',
+    'scharr_right_down',
+    'scharr_left_down'
 ]
 
 def main():
