@@ -5,3 +5,5 @@ data
 results
 logs.log
 *.tar.gz
+1000ep*
+500ep*

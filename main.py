@@ -16,13 +16,15 @@ def parse_args():
     required.add_argument('-v', '--validate', dest='validation_image', required=True, help='Image for valdiation purposes.')
     optional.add_argument('-e', '--epochs', dest='num_of_epochs', help='Amount of epochs for training. By default set to 200.', 
                           default=200, type=int)
+    optional.add_argument('-b', '--batch', dest='batch_size', help='Batch size for training. By default set to 1024.', 
+                          default=1024, type=int)
     optional.add_argument('--acceptance', dest='acceptance_error', help='Value in percentage of acceptance error. By default set to 0.2.', 
                           default=0.2, type=float)
     optional.add_argument('-o', '--output', dest='out_folder', help='Folder for result images. By default set to "results"', 
                           default='results')
-    optional.add_argument('--no-gif', dest='create_gifs', help='If set, no gifs will be created.', action='store_false')
+    optional.add_argument('--with-gif', dest='create_gifs', help='If set, no gifs will be created.', action='store_true')
     optional.add_argument('-h', '--help', action='help', help='Show this help message and exit.')
-    parser.set_defaults(create_gifs=True)
+    parser.set_defaults(create_gifs=False)
     return parser.parse_args()
 
 kernels = np.array([[
@@ -125,18 +127,8 @@ def main():
     logging.info("Preparing images for training...")
     _, gray_img, _, samples, labels = prepare_for_training(args.training_image, kernels)
     logging.info("Starting training process...")
-    weights = train(samples, labels, num_of_epochs=args.num_of_epochs)
+    weights = train(samples, labels, num_of_epochs=args.num_of_epochs, batch_size=args.batch_size)
     logging.info("Training done.")
-    
-    # Animated matrix
-    if args.create_gifs:
-        for i, name in zip(range(weights.shape[1]), kernel_names):
-            out_image = out_folder+f"{name}/animated_training_matrix.gif"
-            logging.info(f"Creating matrix gif for {name}...")
-            create_matrix_gif(weights[:, i], save_folder=out_folder+"gif_images/", 
-                              out_image=out_folder+f"{name}/animated_training_matrix.gif")
-    else:
-        logging.info("Skipping gif creation.")
     
     # Training results
     results = np.round(weights[-1,:], 2)
@@ -152,7 +144,7 @@ def main():
     
     # Results on validation image
     _, _, validation_image = load_normalize_and_grayscale(args.validation_image)
-    logging.info(f"Acceptance error is set to {args.acceptance_error}% of distance between highest and lowest value")
+    logging.info(f"Acceptance error is set to {args.acceptance_error}% of distance between highest and lowest possible value")
     for result, kernel, name in zip(results, kernels, kernel_names):
         out_image = out_folder+f"{name}/validation_image_compare.jpg"
         logging.info(f"Saving validation comparition to {out_image}")
@@ -160,6 +152,16 @@ def main():
                                   convolution(validation_image, kernel), out_image=out_image, 
                                   acceptance_error=args.acceptance_error)
         logging.info(f"Similarity between validation image filtered with trained and original {name} kernel is {perc_of_similarity}%")
+        
+    # Animated matrix
+    if args.create_gifs:
+        for i, name in zip(range(weights.shape[1]), kernel_names):
+            out_image = out_folder+f"{name}/animated_training_matrix.gif"
+            logging.info(f"Creating matrix gif for {name}...")
+            create_matrix_gif(weights[:, i], save_folder=out_folder+"gif_images/", 
+                              out_image=out_folder+f"{name}/animated_training_matrix.gif")
+    else:
+        logging.info("Skipping gif creation.")
 
 if __name__ == "__main__":
     main()

@@ -15,13 +15,13 @@ def visualize_matrix(M, epoch=1):
     fig.suptitle(title, fontsize=20)
     
     height, width = M.shape
-    Mud = np.flipud(M) # Now the i-index complies with matplotlib axes
+    Mud = np.round(np.flipud(M), 2)
     coordinates = [(i, j) for i in range(height) for j in range(width)]
     for coordinate in coordinates:
         i, j = coordinate
-        value = np.round(Mud[i, j], decimals=2)
-        relcoordinate = (j/float(width), i/float(height))
-        ax1.annotate(value, relcoordinate, ha='left', va='center',
+        value = Mud[i, j]
+        rel_coordinate = (j/float(width), i/float(height))
+        ax1.annotate(value, rel_coordinate, ha='left', va='center',
                      size=22, alpha=0.7, family='serif')
         
     padding = 0.2
@@ -29,7 +29,7 @@ def visualize_matrix(M, epoch=1):
     hmargin = (height-1)/float(height) + padding
     
     hcenter = np.median(range(height))/float(height)
-    hcenter = hcenter + 0.015 # Offset due to the character alignment
+    hcenter = hcenter + 0.015
     
     bracket_d = 0.4
     bracket_b = 0.05
@@ -74,9 +74,10 @@ def create_matrix_gif(values, save_folder="gif_images/", out_image="training_wei
     imagepaths = [os.path.join(save_folder, fname) for fname in os.listdir(save_folder) if fname.endswith('.png')]
     imagepaths = natsorted(imagepaths)
 
-    with imageio.get_writer(out_image, mode='I') as writer:
+    fps = len(imagepaths)//5 if len(imagepaths) < 250 else 50
+    with imageio.get_writer(out_image, mode='I', fps=fps) as writer:
         for impath in imagepaths:
             image = imageio.imread(impath)
             writer.append_data(image)
             
-    shutil.rmtree(save_folder, ignore_errors=True)
+    shutil.rmtree(save_folder, ignore_errors=True) # Remove frames for gif
