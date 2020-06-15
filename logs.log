@@ -1,0 +1,54 @@
+2020-06-15 13:15:23,087 Preparing images for training...
+2020-06-15 13:15:29,966 Starting training process...
+2020-06-15 13:16:11,070 Training done.
+2020-06-15 13:16:11,070 Skipping gif creation.
+2020-06-15 13:16:11,070 Results: 
+2020-06-15 13:16:11,070 Original sobel1 filter: 
+[[ 1  0 -1]
+ [ 2  0 -2]
+ [ 1  0 -1]]
+2020-06-15 13:16:11,071 Trained sobel1 filter: 
+[[ 0.99  0.02 -1.02]
+ [ 2.01 -0.03 -1.97]
+ [ 0.99  0.02 -1.02]]
+2020-06-15 13:16:11,071 Saving training comparition to results/sobel1/training_image_compare.jpg
+
+2020-06-15 13:16:11,137 Original sobel2 filter: 
+[[-1  0  1]
+ [-2  0  2]
+ [-1  0  1]]
+2020-06-15 13:16:11,138 Trained sobel2 filter: 
+[[-0.99 -0.02  1.02]
+ [-2.02  0.04  1.97]
+ [-0.99 -0.03  1.02]]
+2020-06-15 13:16:11,138 Saving training comparition to results/sobel2/training_image_compare.jpg
+
+2020-06-15 13:16:11,195 Original sobel3 filter: 
+[[ 1  2  1]
+ [ 0  0  0]
+ [-1 -2 -1]]
+2020-06-15 13:16:11,195 Trained sobel3 filter: 
+[[ 0.98  2.03  0.97]
+ [ 0.04 -0.06  0.05]
+ [-1.03 -1.95 -1.04]]
+2020-06-15 13:16:11,196 Saving training comparition to results/sobel3/training_image_compare.jpg
+
+2020-06-15 13:16:11,250 Original sobel4 filter: 
+[[-1 -2 -1]
+ [ 0  0  0]
+ [ 1  2  1]]
+2020-06-15 13:16:11,251 Trained sobel4 filter: 
+[[-1.   -2.   -1.  ]
+ [-0.01  0.02 -0.01]
+ [ 1.02  1.98  1.01]]
+2020-06-15 13:16:11,251 Saving training comparition to results/sobel4/training_image_compare.jpg
+
+2020-06-15 13:16:11,331 Acceptance error is set to 0.2% of distance between highest and lowest value
+2020-06-15 13:16:11,331 Saving validation comparition to results/sobel1/validation_image_compare.jpg
+2020-06-15 13:16:11,359 Similarity between validation image filtered with trained and original sobel1 kernel is 99.99%
+2020-06-15 13:16:11,359 Saving validation comparition to results/sobel2/validation_image_compare.jpg
+2020-06-15 13:16:11,388 Similarity between validation image filtered with trained and original sobel2 kernel is 100.0%
+2020-06-15 13:16:11,388 Saving validation comparition to results/sobel3/validation_image_compare.jpg
+2020-06-15 13:16:11,413 Similarity between validation image filtered with trained and original sobel3 kernel is 99.79%
+2020-06-15 13:16:11,414 Saving validation comparition to results/sobel4/validation_image_compare.jpg
+2020-06-15 13:16:11,440 Similarity between validation image filtered with trained and original sobel4 kernel is 100.0%

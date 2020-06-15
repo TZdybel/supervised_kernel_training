@@ -56,7 +56,6 @@ def visualize_matrix(M, epoch=1):
 
 
 def create_matrix_gif(values, save_folder="gif_images/", out_image="training_weights.gif"):
-    print("Creating matrix gif...")
     if not os.path.exists(save_folder):
         os.makedirs(save_folder)
     

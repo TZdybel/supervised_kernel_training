@@ -55,17 +55,15 @@ def prepare_for_training(img_path, conv_filters):
     
     return img, gray_img, filtered_imgs, splitted_img, splitted_filtered_imgs
 
-def compare_images(img, original_img, out_image="compared_images.jpg"):
+def compare_images(img, original_img, out_image="compared_images.jpg", acceptance_error=0.2):
     out_image_folder = '/'.join(out_image.split('/')[:-1])
     if not os.path.exists(out_image_folder):
         os.makedirs(out_image_folder)
     
     combined_image = np.hstack((img, np.ones(shape=(img.shape[0], 10)), original_img))
     cv2.imwrite(out_image, 255.0*combined_image)
-    
-    differences = []
-    for pix1, pix2 in zip(img.flatten(), original_img.flatten()):
-        differences.append(np.abs(pix2 - pix1))
-    avg_diff = np.round((np.average(differences)/(np.abs(np.max(original_img) - np.min(original_img)))) * 100, 4)
 
-    return avg_diff
+    similarity_array = np.isclose(img, original_img, atol=np.abs(np.max(original_img) - np.min(original_img))*(acceptance_error/100))
+    perc_of_similarity = np.round(np.count_nonzero(similarity_array)/similarity_array.size*100, 2)
+
+    return perc_of_similarity
